@@ -25,7 +25,15 @@ def psa(f):
         else:
             authenticated_user = None
 
-        user = backend.do_auth(access_token, user=authenticated_user)
+        user = None
+        if "linkedin" in provider:
+            backend.get_or_create_state()
+            backend.redirect_uri = "https://teorria.com/linkedin"
+            backend.data['code'] = access_token
+            backend.data['state'] = backend.get_session_state()
+            user = backend.auth_complete(user=authenticated_user)
+        else:
+            user = backend.do_auth(access_token, user=authenticated_user)
 
         if user is None:
             raise exceptions.InvalidTokenError(_('Invalid token'))
