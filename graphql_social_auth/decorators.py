@@ -28,7 +28,7 @@ def psa(f):
         user = None
         if "linkedin" in provider:
             backend.get_or_create_state()
-            backend.redirect_uri = "https://teorria.com/linkedin"
+            backend.redirect_uri = "https://uneon.org/linkedin"
             backend.data['code'] = access_token
             backend.data['state'] = backend.get_session_state()
             user = backend.auth_complete(user=authenticated_user)
